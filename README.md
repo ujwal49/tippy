@@ -17,8 +17,9 @@ The following **required** functionality is completed:
 
 The following **extensions** are implemented:
 
-* [ ] Custom colors palette selected
-* [x] Custom emoji for tip expereince
+* [ ] Custom colors palette selected.
+* [x] Custom emoji for tip expereince.
+* [x] Split functionality.
 
 ## Video Walkthrough
 
