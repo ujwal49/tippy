@@ -47,6 +47,7 @@ class MainActivity : AppCompatActivity() {
                 tvTipPercentLabel.text = "$p1%"
                 computeTipTotal()
                 updateTipDescription(p1)
+                computeIndividialAmount()
             }
             override fun onStartTrackingTouch(p0: SeekBar?) {
             }
