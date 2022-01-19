@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import org.w3c.dom.Text
 
 private const val TAG = "MainActivity"
 private const val INITIAL_TIP_PERCENT = 15
@@ -21,6 +22,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvTipAmount: TextView
     private lateinit var tvTotalAmount: TextView
     private lateinit var tvTipDescription: TextView
+    private lateinit var etSplitNo: EditText
+    private lateinit var tvIndiAmount: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +35,8 @@ class MainActivity : AppCompatActivity() {
         tvTipPercentLabel = findViewById(R.id.tvTipPercentLabel)
         tvTotalAmount = findViewById(R.id.tvTotalAmount)
         tvTipDescription = findViewById(R.id.tvTipDescription)
+        etSplitNo = findViewById(R.id.etSplitNo)
+        tvIndiAmount = findViewById(R.id.tvIndiAmount)
 
         tvTipPercentLabel.text = "$INITIAL_TIP_PERCENT%"
         seekBarTip.progress = INITIAL_TIP_PERCENT
@@ -55,10 +60,45 @@ class MainActivity : AppCompatActivity() {
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
             override fun afterTextChanged(p0: Editable?) {
-             Log.i(TAG, "after Text Changed $p0")
+//             Log.i(TAG, "after Text Changed $p0")
              computeTipTotal()
             }
         })
+
+        etSplitNo.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+//                Log.i(TAG, "yes i can split this!")
+                computeIndividialAmount()
+            }
+
+        })
+
+
+    }
+
+    private fun computeIndividialAmount() {
+        if(etSplitNo.text.isEmpty() || etBaseAmount.text.isEmpty()){
+            tvIndiAmount.text = ""
+            return
+        }
+        //1. get the value of no of splits and total amount.
+        val splitNo = etSplitNo.text.toString().toDouble()
+        val totalAmount = tvTotalAmount.text.toString().toDouble()
+
+        //2. Compute the no of splits.
+        val noOfSplits = totalAmount/splitNo
+
+        //3. update the value of indi amount
+        tvIndiAmount.text = "%.2f".format(noOfSplits)
+
     }
 
     private fun updateTipDescription(tipPercent: Int) {
